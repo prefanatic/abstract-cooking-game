@@ -1,0 +1,181 @@
+[gd_scene load_steps=17 format=3 uid="uid://bmbs2w0qq8jbt"]
+
+[ext_resource type="Script" path="res://CookSurface.gd" id="1_ujo6d"]
+[ext_resource type="Gradient" uid="uid://dg61yrn878w38" path="res://cook_surface_heat_gradient.tres" id="2_sbii8"]
+[ext_resource type="Script" path="res://TrayButton.gd" id="3_fd0mc"]
+[ext_resource type="Script" path="res://CookSurfaceButton.gd" id="4_057gp"]
+[ext_resource type="AudioStream" uid="uid://b3nbb2l11qk3b" path="res://assets/select_001.ogg" id="5_xtskg"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_uehwe"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1hbac"]
+albedo_color = Color(0.25098, 0.25098, 0.25098, 1)
+emission = Color(0.870588, 0.870588, 0.870588, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4wjmu"]
+material = SubResource("StandardMaterial3D_1hbac")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7bk4"]
+resource_local_to_scene = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_0xgnu"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_p8v8m"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nqsp5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8pglv"]
+
+[sub_resource type="Animation" id="Animation_nnv7k"]
+resource_name = "button"
+length = 0.3
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.867353, 0.77661, 0.994156, 0.3, 1, 0.826788, 0.77661, 0.994156)
+
+[sub_resource type="Animation" id="Animation_iuilm"]
+resource_name = "surface_button"
+length = 0.3
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.232014, 0.913, 0, 0.3, 1, -0.232014, 0.840357, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_frvas"]
+_data = {
+"button": SubResource("Animation_nnv7k"),
+"surface_button": SubResource("Animation_iuilm")
+}
+
+[node name="AbstractGrill" type="Node3D"]
+
+[node name="Frame" type="StaticBody3D" parent="."]
+transform = Transform3D(1.21221, 0, 0, 0, 0.885413, 0, 0, 0, 2.362, 0.243194, 0.430517, 0)
+collision_layer = 2
+collision_mask = 15
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Frame"]
+shape = SubResource("ConvexPolygonShape3D_uehwe")
+
+[node name="FrameMesh" type="MeshInstance3D" parent="Frame"]
+mesh = SubResource("BoxMesh_4wjmu")
+skeleton = NodePath("../..")
+
+[node name="CookSurfaceLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.827, 0, 0, 0, 0.05, 0, 0, 0, 0.961, 0.347, 0.883, -0.5)
+material_override = SubResource("StandardMaterial3D_j7bk4")
+mesh = SubResource("BoxMesh_0xgnu")
+script = ExtResource("1_ujo6d")
+color_gradient = ExtResource("2_sbii8")
+
+[node name="Area3D" type="Area3D" parent="CookSurfaceLeft"]
+collision_layer = 6
+collision_mask = 8
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CookSurfaceLeft/Area3D"]
+shape = SubResource("ConvexPolygonShape3D_p8v8m")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CookSurfaceLeft"]
+collision_layer = 2
+collision_mask = 8
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CookSurfaceLeft/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_p8v8m")
+
+[node name="CookSurfaceRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.827, 0, 0, 0, 0.05, 0, 0, 0, 0.961, 0.347, 0.883, 0.5)
+material_override = SubResource("StandardMaterial3D_j7bk4")
+mesh = SubResource("BoxMesh_0xgnu")
+script = ExtResource("1_ujo6d")
+color_gradient = ExtResource("2_sbii8")
+update_delay = 8
+
+[node name="Area3D" type="Area3D" parent="CookSurfaceRight"]
+collision_layer = 6
+collision_mask = 8
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CookSurfaceRight/Area3D"]
+shape = SubResource("ConvexPolygonShape3D_p8v8m")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CookSurfaceRight"]
+collision_layer = 2
+collision_mask = 8
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CookSurfaceRight/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_p8v8m")
+
+[node name="CookSurfacePlane" type="StaticBody3D" parent="."]
+transform = Transform3D(4.20851, 0, 0, 0, 0.0367082, 0, 0, 0, 5.31773, 0.34741, 0.929431, 0)
+collision_layer = 4
+collision_mask = 0
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CookSurfacePlane"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.171782, 0)
+shape = SubResource("ConvexPolygonShape3D_p8v8m")
+
+[node name="TrayButton" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.867353, 0.77661, 0.994156)
+collision_mask = 15
+script = ExtResource("3_fd0mc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrayButton"]
+transform = Transform3D(0.072, 0, 0, 0, 0.063, 0, 0, 0, 0.18, 0, 0, 0)
+shape = SubResource("BoxShape3D_nqsp5")
+
+[node name="ButtonMesh" type="MeshInstance3D" parent="TrayButton"]
+transform = Transform3D(0.072, 0, 0, 0, 0.063, 0, 0, 0, 0.18, 0, 0, 0)
+mesh = SubResource("BoxMesh_8pglv")
+skeleton = NodePath("../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TrayButton"]
+root_node = NodePath("../ButtonMesh")
+libraries = {
+"": SubResource("AnimationLibrary_frvas")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="TrayButton"]
+stream = ExtResource("5_xtskg")
+
+[node name="CookSurfaceButton" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.232014, 0.913, 0)
+collision_mask = 15
+script = ExtResource("4_057gp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CookSurfaceButton"]
+transform = Transform3D(0.082, 0, 0, 0, 0.112, 0, 0, 0, 0.181, 0, 0, 0)
+shape = SubResource("BoxShape3D_nqsp5")
+
+[node name="ButtonMesh" type="MeshInstance3D" parent="CookSurfaceButton"]
+transform = Transform3D(0.082, 0, 0, 0, 0.112, 0, 0, 0, 0.181, 0, 0, 0)
+mesh = SubResource("BoxMesh_8pglv")
+skeleton = NodePath("../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CookSurfaceButton"]
+root_node = NodePath("../ButtonMesh")
+libraries = {
+"": SubResource("AnimationLibrary_frvas")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CookSurfaceButton"]
+stream = ExtResource("5_xtskg")
+
+[connection signal="body_entered" from="CookSurfaceLeft/Area3D" to="CookSurfaceLeft" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="CookSurfaceLeft/Area3D" to="CookSurfaceLeft" method="_on_area_3d_body_exited"]
+[connection signal="body_entered" from="CookSurfaceRight/Area3D" to="CookSurfaceRight" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="CookSurfaceRight/Area3D" to="CookSurfaceRight" method="_on_area_3d_body_exited"]
+[connection signal="input_event" from="TrayButton" to="TrayButton" method="_on_right_button_input_event"]

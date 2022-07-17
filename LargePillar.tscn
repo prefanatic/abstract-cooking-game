@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwh7uociuy5py"]
+
+[ext_resource type="Script" path="res://MovingPillar.gd" id="1_j2kh6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sahws"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy = 0.25
+
+[sub_resource type="BoxMesh" id="BoxMesh_ebr3o"]
+material = SubResource("StandardMaterial3D_sahws")
+
+[node name="LargePillar" type="MeshInstance3D"]
+transform = Transform3D(2.40571, 0, 0, 0, 8.45594, 0, 0, 0, 2.75887, -27.8674, 3.78997, 0)
+mesh = SubResource("BoxMesh_ebr3o")
+script = ExtResource("1_j2kh6")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(0.415678, 0, 0, 0, 0.11826, 0, 0, 0, 0.362467, -0.0162878, 0.558948, 0)
+visible = false
+light_size = 0.105
+shadow_enabled = true
+distance_fade_enabled = true

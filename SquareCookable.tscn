@@ -1,0 +1,52 @@
+[gd_scene load_steps=10 format=3 uid="uid://e1s4v5fsbroa"]
+
+[ext_resource type="Script" path="res://cookable.gd" id="1_is32k"]
+[ext_resource type="Gradient" uid="uid://34nmk7uceidw" path="res://cookable_doneness_gradient.tres" id="2_wimk0"]
+[ext_resource type="Material" uid="uid://bxk5wo6eet0nd" path="res://cookable_raw.tres" id="3_rvbw2"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_gk37e"]
+flip_faces = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_du60i"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oksut"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_lpwl1"]
+material = SubResource("StandardMaterial3D_oksut")
+
+[sub_resource type="Curve" id="Curve_7d53j"]
+_data = [Vector2(0, 0.363636), 0.0, -1.01527, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_mxs4f"]
+
+[node name="SquareCookable" type="RigidDynamicBody3D"]
+collision_layer = 8
+collision_mask = 11
+continuous_cd = true
+linear_damp = 1.0
+angular_damp = 1.0
+script = ExtResource("1_is32k")
+color_gradient = ExtResource("2_wimk0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.184, 0, 0, 0, 0.029, 0, 0, 0, 0.184, 0, 0, 0)
+mesh = SubResource("PrismMesh_gk37e")
+surface_material_override/0 = ExtResource("3_rvbw2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.184, 0, 0, 0, 0.029, 0, 0, 0, 0.184, 0, 0, 0)
+shape = SubResource("BoxShape3D_du60i")
+
+[node name="SmokeParticles" type="CPUParticles3D" parent="."]
+emitting = false
+mesh = SubResource("SphereMesh_lpwl1")
+emission_shape = 3
+emission_box_extents = Vector3(0.1, 0, 0.1)
+gravity = Vector3(0, 1, 0)
+scale_amount_min = 0.1
+scale_amount_max = 0.2
+scale_amount_curve = SubResource("Curve_7d53j")
+color = Color(0.254902, 0.254902, 0.254902, 1)
+color_ramp = SubResource("Gradient_mxs4f")

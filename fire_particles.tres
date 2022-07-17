@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bkmbtbo3hgk51"]
+
+[resource]
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy = 6.23
+heightmap_scale = -0.754
+backlight = Color(1, 0, 0, 1)
+grow_amount = -0.844

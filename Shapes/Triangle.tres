@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://bli1ue0qlx3bm"]
+
+[ext_resource type="Script" path="res://CookableResource.gd" id="1_yarqp"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_dvekn"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.0146517, 0.470697, 0.470697, 0.0735213, 0.352957, 0.47061, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.0146517, 0.470697, -0.470697, 0.5, -0.5, 0.5, -0.0146517, 0.470697, 0.470697, 0.0146517, 0.470697, -0.470697)
+
+[sub_resource type="PrismMesh" id="PrismMesh_lxelb"]
+
+[resource]
+script = ExtResource("1_yarqp")
+id = "triangle"
+mesh = SubResource("PrismMesh_lxelb")
+collision_shape = SubResource("ConvexPolygonShape3D_dvekn")

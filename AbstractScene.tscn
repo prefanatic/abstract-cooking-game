@@ -1,0 +1,155 @@
+[gd_scene load_steps=25 format=3 uid="uid://by563os1ajlle"]
+
+[ext_resource type="PackedScene" uid="uid://bmbs2w0qq8jbt" path="res://AbstractGrill.tscn" id="1_b82mq"]
+[ext_resource type="Script" path="res://AbstractWorld.gd" id="1_e2au5"]
+[ext_resource type="Script" path="res://Player.gd" id="2_obltr"]
+[ext_resource type="PackedScene" uid="uid://cpk7amjsp3mbu" path="res://AbstractPark.tscn" id="4_agec0"]
+[ext_resource type="PackedScene" uid="uid://cqv0ius3mp7km" path="res://AbstractIngredientTray.tscn" id="5_46hy4"]
+[ext_resource type="Script" path="res://AbstractIngredientTray.gd" id="6_q71xq"]
+[ext_resource type="PackedScene" uid="uid://dff77mig3wqpv" path="res://AbstractTrash.tscn" id="6_v5jld"]
+[ext_resource type="Script" path="res://AbstractTrash.gd" id="7_dxkc1"]
+[ext_resource type="Texture2D" uid="uid://cval15mlboh2p" path="res://assets/tray.png" id="10_n46hj"]
+[ext_resource type="FontFile" uid="uid://c60cnfylt18uh" path="res://assets/Roboto-Regular.ttf" id="10_nylr5"]
+[ext_resource type="Texture2D" uid="uid://d4di0xq0hdmij" path="res://assets/cook.png" id="11_mi3nk"]
+[ext_resource type="Texture2D" uid="uid://dcgqe4lviwll" path="res://assets/trash.png" id="12_wa0yx"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_dcpgo"]
+
+[sub_resource type="Sky" id="Sky_m7o25"]
+sky_material = SubResource("PhysicalSkyMaterial_dcpgo")
+
+[sub_resource type="Environment" id="Environment_3h6tw"]
+background_mode = 2
+background_energy = 0.94
+sky = SubResource("Sky_m7o25")
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+glow_enabled = true
+glow_blend_mode = 0
+glow_hdr_threshold = 0.5
+volumetric_fog_density = 0.0474
+
+[sub_resource type="CameraEffects" id="CameraEffects_6djy4"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 14.04
+dof_blur_amount = 0.04
+
+[sub_resource type="AudioStreamOGGVorbis" id="AudioStreamOGGVorbis_0wxme"]
+
+[sub_resource type="Animation" id="Animation_qsmdi"]
+resource_name = "tray_slide"
+length = 2.0
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.186, -0.0102956, 1.51589, 2, 1, -0.186, -0.0102956, 7.87505)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6nsu2"]
+_data = {
+"tray_slide": SubResource("Animation_qsmdi")
+}
+
+[sub_resource type="Theme" id="Theme_0r5co"]
+default_font = ExtResource("10_nylr5")
+default_font_size = 100
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_us0qv"]
+viewport_path = NodePath("ScoreViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4aut5"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = SubResource("ViewportTexture_us0qv")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gmb6t"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_evo1c"]
+
+[node name="AbstractWorld" type="Node3D"]
+script = ExtResource("1_e2au5")
+
+[node name="AbstractGrill" parent="." instance=ExtResource("1_b82mq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.462105, -0.909274, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3h6tw")
+camera_effects = SubResource("CameraEffects_6djy4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.0273562, -0.830739, 0.55599, 0.00388364, 0.556282, 0.830985, -0.999618, -0.0205733, 0.0184441, 9.94431, 12.5811, 0)
+light_energy = 0.945
+light_indirect_energy = 0.989
+shadow_enabled = true
+
+[node name="Player" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 1.49012e-08, 1, 0, 0, -4.65661e-10, 1, 0, 0, -1.49012e-08)
+script = ExtResource("2_obltr")
+dragSpeed = 20.0
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(-3.92247e-11, -0.558527, 0.829486, 1.65498e-12, 0.829486, 0.558527, -1, 4.0954e-10, 2.28472e-10, 0.906456, 1.11877, 0)
+
+[node name="AbstractPark" parent="." instance=ExtResource("4_agec0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.01445, 0)
+
+[node name="AbstractTrash" parent="." instance=ExtResource("6_v5jld")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0250267, -0.786148, -1.41633)
+script = ExtResource("7_dxkc1")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="AbstractTrash"]
+stream = SubResource("AudioStreamOGGVorbis_0wxme")
+
+[node name="AbstractIngredientTray" parent="." instance=ExtResource("5_46hy4")]
+transform = Transform3D(-0.995614, 0, -5.7612e-08, 0, 0.99842, 0, 8.70393e-08, 0, -0.659005, -0.186, -0.0102956, 1.51589)
+script = ExtResource("6_q71xq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AbstractIngredientTray"]
+playback_process_mode = 0
+libraries = {
+"": SubResource("AnimationLibrary_6nsu2")
+}
+
+[node name="ScoreViewport" type="SubViewport" parent="."]
+transparent_bg = true
+gui_embed_subwindows = true
+size = Vector2i(128, 128)
+render_target_update_mode = 4
+
+[node name="Control" type="Control" parent="ScoreViewport"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="ScoreViewport/Control"]
+offset_left = 10.0
+offset_top = 7.0
+offset_right = 29.0
+offset_bottom = 125.0
+theme = SubResource("Theme_0r5co")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreViewportQuad" type="MeshInstance3D" parent="."]
+transform = Transform3D(-5.81361e-09, 0.133, 0, 5.81361e-09, 2.54121e-16, -0.133, -0.133, -5.81361e-09, -5.81361e-09, 0.277275, 0.01, -1.42832)
+material_override = SubResource("StandardMaterial3D_4aut5")
+mesh = SubResource("PlaneMesh_gmb6t")
+
+[node name="HelpBackboard" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.158537, 0.158382, 0, -0.156579, 0.160363, 0, 0, 0, 1.40014, -1.08249, 0.20425, 0)
+visible = false
+mesh = SubResource("PlaneMesh_evo1c")
+
+[node name="Sprite3D" type="Sprite3D" parent="HelpBackboard"]
+transform = Transform3D(-7.16868e-09, -0.999927, 0.012217, 2.22045e-16, 0.012217, 0.999926, -0.164, 4.37082e-08, -5.3402e-10, -0.0968437, 0.0313509, 0.711754)
+texture = ExtResource("10_n46hj")
+
+[node name="Sprite3D2" type="Sprite3D" parent="HelpBackboard"]
+transform = Transform3D(-7.16868e-09, -0.999927, 0.012217, 2.22045e-16, 0.012217, 0.999926, -0.164, 4.37082e-08, -5.3402e-10, -0.0968437, 0.0313509, 0.0208776)
+texture = ExtResource("11_mi3nk")
+
+[node name="Sprite3D3" type="Sprite3D" parent="HelpBackboard"]
+transform = Transform3D(-7.16868e-09, -0.999927, 0.012217, -2.22045e-16, 0.0122168, 0.999926, -0.164, 4.37082e-08, -5.3402e-10, -0.0968437, 0.0313509, -0.756725)
+texture = ExtResource("12_wa0yx")

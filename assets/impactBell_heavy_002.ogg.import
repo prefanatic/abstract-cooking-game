@@ -1,0 +1,16 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOGGVorbis"
+uid="uid://cyf2odx5smtf3"
+path="res://.godot/imported/impactBell_heavy_002.ogg-23557799a3f1ccc61bc2fd0a7ba7a9ab.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/impactBell_heavy_002.ogg"
+dest_files=["res://.godot/imported/impactBell_heavy_002.ogg-23557799a3f1ccc61bc2fd0a7ba7a9ab.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0

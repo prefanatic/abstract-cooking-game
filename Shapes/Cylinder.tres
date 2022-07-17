@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://b5pga4kn4jkm7"]
+
+[ext_resource type="Script" path="res://CookableResource.gd" id="1_yarqp"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uoix1"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0nmji"]
+
+[resource]
+script = ExtResource("1_yarqp")
+id = "cylinder"
+mesh = SubResource("CylinderMesh_0nmji")
+collision_shape = SubResource("CylinderShape3D_uoix1")

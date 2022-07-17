@@ -1,0 +1,100 @@
+[gd_scene load_steps=10 format=3 uid="uid://dff77mig3wqpv"]
+
+[ext_resource type="Script" path="res://ExpectedCookablePreview.gd" id="1_x4r7c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3whdq"]
+albedo_color = Color(0.25098, 0.25098, 0.25098, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_siqwl"]
+material = SubResource("StandardMaterial3D_3whdq")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_atvxn"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_d2wnw"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ybka4"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_psxi7"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j2c2f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eyys3"]
+
+[node name="AbstractTrash" type="Node3D"]
+
+[node name="Right" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 15
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Right"]
+transform = Transform3D(0.604218, 0, 0, 0, 1.15354, 0, 0, 0, 0.0396799, 0, 0.455055, -0.2)
+mesh = SubResource("BoxMesh_siqwl")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Right"]
+transform = Transform3D(0.604218, 0, 0, 0, 1.15354, 0, 0, 0, 0.0396799, 0, 0.455055, -0.2)
+shape = SubResource("ConvexPolygonShape3D_atvxn")
+
+[node name="Left" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 15
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Left"]
+transform = Transform3D(0.604218, 0, 0, 0, 1.15354, 0, 0, 0, 0.0396799, 0, 0.455055, 0.2)
+mesh = SubResource("BoxMesh_siqwl")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Left"]
+transform = Transform3D(0.604218, 0, 0, 0, 1.15354, 0, 0, 0, 0.0396799, 0, 0.455055, 0.2)
+shape = SubResource("ConvexPolygonShape3D_d2wnw")
+
+[node name="Back" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 15
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Back"]
+transform = Transform3D(0.0473375, 0, 0, 0, 1.15354, 0, 0, 0, 0.416041, -0.278, 0.455, 0)
+mesh = SubResource("BoxMesh_siqwl")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Back"]
+transform = Transform3D(0.0473375, 0, 0, 0, 1.15354, 0, 0, 0, 0.416041, -0.278, 0.455, 0)
+shape = SubResource("ConvexPolygonShape3D_ybka4")
+
+[node name="Front" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 15
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Front"]
+transform = Transform3D(0.0473375, 0, 0, 0, 1.15354, 0, 0, 0, 0.416041, 0.278364, 0.455, 0)
+mesh = SubResource("BoxMesh_siqwl")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Front"]
+transform = Transform3D(0.0473375, 0, 0, 0, 1.15354, 0, 0, 0, 0.416041, 0.278364, 0.455, 0)
+shape = SubResource("ConvexPolygonShape3D_psxi7")
+
+[node name="RaycastRamp" type="StaticBody3D" parent="."]
+transform = Transform3D(-1.52553e-08, -0.546745, 0, 0.349, -2.3899e-08, 0, 0, 0, 0.65268, 0.251671, 0.92698, 0.0551209)
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RaycastRamp"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.278364, 0.455, 0)
+shape = SubResource("CapsuleShape3D_j2c2f")
+
+[node name="FallSensor" type="Area3D" parent="."]
+transform = Transform3D(0.50869, 0, 0, 0, 0.579203, 0, 0, 0, 0.355043, 0, 0.186115, 0)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FallSensor"]
+shape = SubResource("BoxShape3D_eyys3")
+
+[node name="ExpectedCookablePreview" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.184, 0, 0, 0, 0.029, 0, 0, 0, 0.184, -0.298196, 1.34339, 0)
+script = ExtResource("1_x4r7c")

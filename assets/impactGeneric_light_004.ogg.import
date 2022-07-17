@@ -1,0 +1,16 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOGGVorbis"
+uid="uid://qhebjiqincio"
+path="res://.godot/imported/impactGeneric_light_004.ogg-8def7a32ff990f87109e0098ab379ee7.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/impactGeneric_light_004.ogg"
+dest_files=["res://.godot/imported/impactGeneric_light_004.ogg-8def7a32ff990f87109e0098ab379ee7.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0

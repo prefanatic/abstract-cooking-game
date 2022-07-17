@@ -1,0 +1,106 @@
+[gd_scene load_steps=10 format=3 uid="uid://cdses37raay4u"]
+
+[ext_resource type="Material" uid="uid://bkmbtbo3hgk51" path="res://fire_particles.tres" id="1_qj5wt"]
+[ext_resource type="Script" path="res://fire_particles.gd" id="2_vjenj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_3uwpt"]
+material = ExtResource("1_qj5wt")
+size = Vector3(0.03, 0.03, 0.03)
+
+[sub_resource type="Curve" id="Curve_8saex"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.218182), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_x4kjx"]
+colors = PackedColorArray(1, 0.909804, 0.0313726, 1, 1, 0, 0, 1)
+
+[sub_resource type="Curve" id="Curve_ddrei"]
+max_value = 1000.0
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(1, 1000), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_sg0pd"]
+min_value = 0.1
+max_value = 1.5
+_data = [Vector2(0, 0.1), 0.0, 1.4, 0, 0, Vector2(1, 1.5), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="GDScript" id="GDScript_k0a8e"]
+script/source = "extends MeshInstance3D
+
+var cookables = []
+
+@export var intensity = 0
+@export var colorGradient: Gradient
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	intensity = randf()
+	
+
+	mesh.surface_get_material(0).albedo_color = colorGradient.interpolate(intensity)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	for cookable in cookables:
+		cookable.cook_tick(intensity * delta)
+
+
+func _on_area_3d_body_entered(body):
+	# Assuming the collider mask already is looking for food
+	if body is Cookable:
+		print(body)
+		cookables.append(body)
+		body.adjust_smoke_particles(intensity)
+
+func _on_area_3d_body_exited(body):
+	if body is Cookable:
+		cookables.erase(body)
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3xt0p"]
+size = Vector3(0.726499, 0.227357, 0.34015)
+
+[node name="FireParticles" type="CPUParticles3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00270426, 0.0129134, -0.0389524)
+layers = 2
+amount = 1000
+randomness = 1.0
+lifetime_randomness = 0.57
+mesh = SubResource("BoxMesh_3uwpt")
+emission_shape = 3
+emission_box_extents = Vector3(0.374, 0.05, 0.183)
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, 0.1, 0)
+scale_amount_min = 0.25
+scale_amount_max = 0.49
+scale_amount_curve = SubResource("Curve_8saex")
+color = Color(1, 0.909804, 0.0313726, 1)
+color_ramp = SubResource("Gradient_x4kjx")
+script = ExtResource("2_vjenj")
+amount_curve = SubResource("Curve_ddrei")
+lifetime_curve = SubResource("Curve_sg0pd")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0779665, 0)
+light_color = Color(1, 0.729412, 0.729412, 1)
+light_energy = 0.236
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 14.85
+omni_range = 1.23373
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 8
+script = SubResource("GDScript_k0a8e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1.03051, 0, 0, 0, 1.03051, 0, 0, 0, 1.03051, 0, 0.0887218, 0)
+shape = SubResource("BoxShape3D_3xt0p")
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="Area3D" method="_on_area_3d_body_exited"]
